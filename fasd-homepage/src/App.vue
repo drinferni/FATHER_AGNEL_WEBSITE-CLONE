@@ -1,16 +1,16 @@
 <template>
   <div id="header-top">
     <div id="toolbox" >
-      <div class="tools" v-for="tools in toolbox" :key="tools"> <img class="toolbox-img" src="./assets/logo.png"> {{tools}}</div>
+      <div class="tools" v-for="tools in toolbox" :key="tools"> <img class="toolbox-img" src="logo.png"> {{tools}}</div>
      </div>
   </div>
 
 
   <div id="headerbottom">
       <div id="hb-wrapper">
-        <img id="hb-img" src="./assets/logo.png">
+        <img id="hb-img" src="logo.png">
         <h1 id="maintext">FATHER AGNEL SCHOOL, NEW DELHI</h1>
-        <img id="hb-img" src="./assets/logo.png">
+        <img id="hb-img" src="logo.png">
 
       </div>
   </div>
@@ -23,11 +23,11 @@
       <div style=" position : relative; height:90vh; width:100vw;">
         <div style="position : absolute;">
           <div id="main-one-images" >
-            <img v-for="source in sources" :key="source" id="m1-image" src="./assets/logo.png"  width="100" height="20">
+            <img v-for="(source,index) in sources" :key="source" class="m1-image" :id = get_id_m1(index)  :src=form_img_src_m1(index)  width="100" height="20">
           </div>
         </div>
-        <div style=" position :absolute; width:3vw; height:90vh; right:0px; ">
-          <button id="m1-button"  v-for="(source,index) in sources" :key="source"> {{index}}</button>
+        <div style=" position :absolute; width:3vw; height:90vh; right:0px; " >
+          <button  class="m-one-button"  v-for="(source,index) in sources" :key="source" :id=form_m1_id(index)  @click="slider=index;  slider_main(); " > {{index}} </button>
         </div>
       </div>
     </div>
@@ -55,15 +55,44 @@ export default {
     return {
       toolbox : ["Google Map" , "Contact Us" , "Alerts" , "Mandatory Public Disclosure" , "Login"],
       toolbox1 : ["What WE ARE" , "STUDENT'S HUB" , "ADMIN" , "CAMPUS BUZZ" , "BUS ROUTES AND ACCESS" , "OUTREACH" ,"FAA (ALUMINI)","CAMPUSCARE"],
-      sources : ["logo.png" ,"logo.png","logo.png","logo.png","logo.png" ]
+      sources : ["1.png" ,"2.png","3.png","4.png","5.png" ],
+      slider : 0,
     }
+  },
+  methods : {
+    get_id_m1 (index) {
+      var a = "m";
+      a+=index;
+      a+="-image"
+      return a
+    },
+    form_img_src_m1(index) {
+      var a = this.sources[index]
+      return a
+    },
+    form_m1_id (index) {
+      var a= "m";
+      ++index;
+      a+=index;
+      a+="-button"
+      return a
+    },
+    slider_main () {
+        console.log(this.slider)
+        for (var i=0 ; i< this.sources.length ; ++i) {
+          var a = document.getElementById( 'm' + i + '-image' )
+          if (i!==this.slider) a.style.display="none"
+          else a.style.display = "block"
+
+        }
+    } 
   }
 }
 
 </script>
 
 <style>
-#m1-button {
+.m-one-button {
   display : block;
   position :relative;
   right : 0px;
@@ -74,7 +103,7 @@ export default {
   position : relative;
   height : 90vh;
 }
-#m1-image {
+.m1-image {
   position :absolute;
   width:100%;
   height:100%;
